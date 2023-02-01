@@ -1,3 +1,5 @@
+//https://en.wikipedia.org/wiki/Gaussian_elimination
+
 #include <bits/stdc++.h>
 #include <boost/rational.hpp>
 
@@ -9,6 +11,7 @@ using namespace boost;
 using Q = rational<int>;
 using M = vector<vector<Q>>;
 
+// input a rational number
 istream& operator>> (istream& in, Q& r)
 {
     int n, d = 1;
@@ -19,13 +22,15 @@ istream& operator>> (istream& in, Q& r)
     return in;
 }
 
+// output a rational number
 ostream& operator<< (ostream& out, const Q& r)
 {
     out << r.numerator();
     if (r.denominator() != 1) out << '/' << r.denominator();
     return out;
 }
-    
+
+// input a matrix representing a linear system
 istream& operator>> (istream& in, M& m)
 {
     int n; in >> n;
@@ -42,6 +47,7 @@ istream& operator>> (istream& in, M& m)
     return in;
 }
 
+// output a matrix representing a linear system
 ostream& operator<< (ostream& out, const M& m)
 {
     for (const auto& r : m)
@@ -54,6 +60,7 @@ ostream& operator<< (ostream& out, const M& m)
     return out;
 }
 
+// https://en.wikipedia.org/wiki/Gaussian_elimination
 void gausian_elimination(M& m)
 {
     int n = m.size();
@@ -67,10 +74,11 @@ void gausian_elimination(M& m)
                 m[j][k] -= (ratio * m[i][k]);
             }
         }
-        cout << m << '\n';
+        cout << m << '\n'; // diag output
     }
 }
 
+// https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution
 void back_substitution(M& m)
 {
     int n = m.size();
@@ -83,11 +91,11 @@ void back_substitution(M& m)
         }
         m[i][n] /= m[i][i];
         m[i][i] = 1;
-        cout << m << '\n';
+        cout << m << '\n'; // diag output
     }
 }
 
-// soves Ax=b matric equasions
+// solves Ax=b matric equasions
 void solve(M& m)
 {
     gausian_elimination(m);

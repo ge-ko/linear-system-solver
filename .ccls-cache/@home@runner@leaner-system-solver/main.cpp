@@ -1,3 +1,5 @@
+//https://en.wikipedia.org/wiki/Gaussian_elimination
+
 #include <bits/stdc++.h>
 #include <boost/rational.hpp>
 
@@ -31,10 +33,14 @@ istream& operator>> (istream& in, M& m)
     int n; in >> n;
     m.resize(n);
     for (auto& r : m)
-        for (int = 0; i <= n; ++i)
-            
-        // input one more column for the augmented matrix (A|b) of size [n][n+1]
-        copy_n(istream_iterator<Q>(in), n+1, back_inserter(r));
+    {
+        //copy_n(istream_iterator<Q>(in), n+1, back_inserter(r));
+        r.resize(n+1); // input additional column for the augmented matrix (A|b) of size [n][n+1]
+        for (auto& e : r)
+        {
+            in >> e;
+        }
+    }
     return in;
 }
 
@@ -42,9 +48,9 @@ ostream& operator<< (ostream& out, const M& m)
 {
     for (const auto& r : m)
     {
-        for (const Q& e : r)
-            out << e << ' ';
         //copy(all(r), ostream_iterator<Q>(out, " "));
+        for (const auto& e : r)
+            out << e << ' ';
         out << '\n';
     }
     return out;
@@ -55,15 +61,15 @@ void gausian_elimination(M& m)
     int n = m.size();
     for (int i = 0; i < n-1; ++i)
     {
-       for (int j = i+1; j < n; ++j)
-       {
-           Q ratio = m[j][i] / m[i][i];
-           for (int k = i; k < n+1; ++k)
-           {
+        for (int j = i+1; j < n; ++j)
+        {
+            Q ratio = m[j][i] / m[i][i];
+            for (int k = i; k < n+1; ++k)
+            {
                 m[j][k] -= (ratio * m[i][k]);
-           }
-           cout << m << '\n';
-       }
+            }
+        }
+        cout << m << '\n';
     }
 }
 
